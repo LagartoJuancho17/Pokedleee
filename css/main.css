@@ -299,3 +299,85 @@ main {
     background-color: var(--type-fairy);
     color: var(--clr-black);
 }
+
+
+
+
+
+
+/* POKEDLE ESTILOS*/
+.pokedle-body{
+
+        font-family: sans-serif;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 20px;
+        padding: 20px;
+
+}
+#tablero {
+    display: grid;
+    grid-template-columns: repeat(1, 1fr); /* Una sola columna inicialmente */
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.intento {
+    display: grid;
+    grid-template-columns: 1fr repeat(2, 1fr) 0.8fr 0.8fr 0.8fr 1fr; /* Ajustado para las pistas */
+    gap: 5px;
+}
+
+.encabezados {
+    font-weight: bold;
+    color: #333;
+}
+
+.casilla {
+    border: 1px solid #ccc;
+    padding: 10px;
+    text-align: center;
+    white-space: nowrap; /* Evitar que el texto se rompa */
+    overflow: hidden; /* Ocultar el texto que se desborda */
+    text-overflow: ellipsis; /* Mostrar "..." para el texto desbordado */
+}
+
+.correcto {
+    background-color: #66bb6a; /* Verde */
+    color: white;
+}
+
+.parcial {
+    background-color: #ffee58; /* Amarillo */
+}
+
+.incorrecto {
+    background-color: #ef5350; /* Rojo */
+    color: white;
+}
+
+#formulario-intento {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
+#input-pokemon {
+    padding: 8px;
+    border: 1px solid #ccc;
+    flex-grow: 1; /* Para que el input ocupe más espacio */
+}
+
+#enviar-intento {
+    padding: 8px 15px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+#mensajes {
+    font-weight: bold;
+    text-align: center;
+}

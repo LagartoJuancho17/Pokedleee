@@ -2,11 +2,16 @@
 console.log("Hola")
 const botonesHeader = document.querySelectorAll(".btn-header"); //busco todos los botones del header
 
+//Polimorfismo para preguntas usando getter. Al menos 2 subclases para 2 tipos de preguntas, pregunta imgagen, 
+//Clase incial pregunta, y sbuclase por tipo de pregunta. Mas polimorfismo, Crear Pantalla Admin para crear una pregunta nueva.
+
+
 class Pokemon{
     //Propiedades privadas
     #id;#nombre;#tipos;#imagen;#altura;#peso;#habilidades; //defino las propiedades privadas de la clase Pokemon
 
     constructor(data){
+        //destructuring
         this.#id = data.id;
         this.#nombre = data.name;
         this.#tipos = data.types.map(type => type.type.name); //map me devuelve un array con los tipos de pokemon
@@ -42,10 +47,10 @@ class Pokemon{
 
 }
 
-        if (window.location.pathname.includes("index.html") || window.location.pathname === "/") {
+        if (window.location.pathname.includes("index.html") || window.location.pathname === "/") { //Solo actua si esta en el index.html porque sino rompe la otra pagina
 
 
-function mostrarPokemon(data){ //agarro la data de fetch para usar como parametro 
+function mostrarPokemon(data){ //agarro la data del fetch para usar como parametro 
     const pokemon = new Pokemon(data); //instancio la clase Pokemon y le paso la data de fetch como parametro
 
     let pokeId = pokemon.id.toString(); //convierto el id a string para poder usarlo en el html
@@ -114,13 +119,23 @@ const url = "https://pokeapi.co/api/v2/pokemon/";
 
 
 //Quiero recorrer la URL 151 veces para obtener los pokemones
-function cargarTodosLosPokemones(){
+async function cargarTodosLosPokemones(){
     listaPokemon.innerHTML = ""; //limpio la lista de pokemones
-
+/*
 for (let i = 1; i <= 151; i++) {
     fetch(url + i) //
         .then((response) => response.json())
         .then(data => mostrarPokemon(data))
+}*/
+
+for (let i = 1; i <= 151; i++) {
+    try{
+        const response = await fetch(url + i); //hago el fetch a la url
+        const data = await response.json(); //convierto la respuesta a json
+        mostrarPokemon(data); //llamo a la funcion mostrarPokemon y le paso la data
+    } catch (error){
+        console.error("Error al cargar Pokémon:", error); //si hay un error lo muestro en la consola
+    }
 }
 }
 
@@ -130,6 +145,8 @@ cargarTodosLosPokemones();
         }
 
 //POKEDLE
+if (window.location.pathname.includes("pokedle.html") || window.location.pathname === "/") { //Solo actua si esta en el index.html porque sino rompe la otra pagina
+
 console.log("Hola Pokedle")
 
 const tablero = document.getElementById("tablero");
@@ -137,13 +154,14 @@ const formularioIntento = document.getElementById("formulario-intento");
 const inputPokemon = document.getElementById("input-pokemon");
 const enviarIntento = document.getElementById("enviar-intento");
 const mensajes = document.getElementById("mensajes");
-
-let pokemonSecreto;
-const intentos = [];
-const numeroIntentos = 10;
 const url = "https://pokeapi.co/api/v2/pokemon/";
 
-// Mapeo de IDs a generaciones
+let pokemonSecreto; //Varibale para pokemon secreto
+const intentos = []; 
+const numeroIntentos = 10;
+
+
+// Mapeo de ID a generaciones 
 const generaciones = {
     1: [1, 151],
     2: [152, 251],
@@ -156,30 +174,10 @@ const generaciones = {
     9: [906, 1010],
 };
 
-// Mapeo de tipos a colores (puedes personalizar esto)
-const coloresTipos = {
-    normal: '#A8A77A',
-    fire: '#EE8130',
-    water: '#6390F0',
-    grass: '#7AC74C',
-    electric: '#F7D02C',
-    ice: '#96D9D6',
-    fighting: '#C22E28',
-    poison: '#A33EA1',
-    ground: '#E2BF65',
-    flying: '#A98FF3',
-    psychic: '#F95587',
-    bug: '#A6B91A',
-    rock: '#B6A136',
-    ghost: '#735797',
-    dragon: '#6F35FC',
-    steel: '#B7B7CE',
-    dark: '#705746',
-    fairy: '#D685AD',
-};
+// Mapeo de tipos a colores
 
-
-async function obtenerPokemon(id) {
+//Obtengo los datos del pokemon secreto 
+async function obtenerPokemon(id) { 
     try {
         const response = await fetch(url + id);
         const data = await response.json();
@@ -190,13 +188,10 @@ async function obtenerPokemon(id) {
     }
 }
 
+//Obtengo los datos del pokemon por nombre que ingresa el usuario
 async function obtenerPokemonPorNombre(nombre) {
     try {
-        const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${nombre.toLowerCase()}`); 
-        if (!response.ok) {
-            console.error("Error al obtener Pokémon (nombre):", response.status, response.statusText);
-            return null;
-        }
+        const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${nombre.toLowerCase()}`);
         const data = await response.json();
         return new Pokemon(data);
     } catch (error) {
@@ -205,8 +200,9 @@ async function obtenerPokemonPorNombre(nombre) {
     }
 }
 
+//Obtengo la generacion del pokemon secreto con el mapeo del array
 function obtenerGeneracionPorId(id) {
-    for (const generacion in generaciones) {
+    for (const generacion in generaciones) { 
         const [min, max] = generaciones[generacion];
         if (id >= min && id <= max) {
             return parseInt(generacion);
@@ -234,7 +230,7 @@ function mostrarIntento(intentoPokemon, pistas) {
     intentoDiv.appendChild(nombreCasilla);
 
     // Tipos
-    const secretoTipos = pokemonSecreto.tipos || []; // Asegurarse de que secretoTipos sea un array
+    const secretoTipos = pokemonSecreto.tipos || []; // Asegurarse de que secretoTipos un array
     for (let i = 0; i < 2; i++) {
         const tipo = intentoPokemon.tipos[i] || "";
         const pistaTipo = pistas.tipos && pistas.tipos[i];
@@ -250,10 +246,7 @@ function mostrarIntento(intentoPokemon, pistas) {
             } else {
                 tipoCasilla.classList.add("incorrecto"); // El tipo no existe en el Pokémon secreto
             }
-
-            if (coloresTipos[tipo]) {
-                tipoCasilla.style.color = 'white'; // Mantener el color de texto blanco para los tipos
-            }
+            
         } else {
             tipoCasilla.classList.add("incorrecto"); // Casilla vacía para tipos inexistentes en el intento
         }
@@ -282,7 +275,6 @@ function mostrarIntento(intentoPokemon, pistas) {
 }
 
 function compararIntento(intentoPokemon) {
-    if (!pokemonSecreto) return null;
 
     const pistas = {
         nombre: intentoPokemon.nombre.toLowerCase() === pokemonSecreto.nombre.toLowerCase() ? "correcto" : "incorrecto",
@@ -313,25 +305,41 @@ function compararIntento(intentoPokemon) {
     return pistas;
 }
 
+
+// Comparar números (altura y peso) 
 function compararNumeros(intento, secreto) {
     const diferencia = intento - secreto;
     if (diferencia === 0) {
         return "correcto";
-    } else if (Math.abs(diferencia) <= 20) { // Puedes ajustar este umbral
+    } else if (Math.abs(diferencia) <= 20) { //Umbral de tolerancia si es muy cercano o no!
         return "parcial";
     } else {
         return "incorrecto";
     }
 }
 
+
+//CAMBIAR ESTOOOOOOOO
+/*
 async function seleccionarPokemonSecreto() {
-    const randomIndex = Math.floor(Math.random() * 1010) + 1; // Considerar todos los Pokémon hasta la Gen 9
-    pokemonSecreto = await obtenerPokemon(randomIndex);
+    const randomIndex = Math.floor(Math.random() * 151) + 1; // SOlo los pokemon de gen 1 
+    pokemonSecreto = await obtenerPokemon(randomIndex); 
     console.log("Pokémon secreto seleccionado:", pokemonSecreto);
+}*/
+
+//SELECCIONO MANUALMENTE EL POKEMON
+async function seleccionarPokemonSecreto(id) {
+    try {
+        pokemonSecreto = await obtenerPokemon(id); // Obtiene el Pokémon usando el ID proporcionado
+        console.log("Pokémon secreto seleccionado:", pokemonSecreto);
+    } catch (error) {
+        console.error("Error al seleccionar el Pokémon secreto:", error);
+    }
 }
 
+
 async function manejarIntento() {
-    const nombreIntento = inputPokemon.value.trim();
+    const nombreIntento = inputPokemon.value.trim(); //Valor ingresado por el usuuario
     inputPokemon.value = "";
 
     if (!nombreIntento) {
@@ -365,7 +373,7 @@ async function manejarIntento() {
 
 async function iniciarJuego() {
     mensajes.textContent = `Tienes ${numeroIntentos} intentos para adivinar el Pokémon.`;
-    await seleccionarPokemonSecreto();
+    await seleccionarPokemonSecreto(15); //SACAR ESTO SI NO QUIERO QUE SELECCIONE UN POKEMON RANDOM
 
     // Crear la estructura de las pistas en el tablero (encabezados)
     const encabezados = document.createElement("div");
@@ -388,3 +396,108 @@ formularioIntento.addEventListener("submit", (e) => {
 
 iniciarJuego();
 
+}
+
+//PREGUNTAS
+
+// Clase base Pregunta
+class Pregunta {
+    constructor(pokemon) {
+      this.pokemon = pokemon;
+    }
+  
+    get tipo() {
+      return 'Genérica';
+    }
+  
+    mostrarPregunta() {
+      return `<p>Pregunta genérica</p>`;
+    }
+  
+    verificarRespuesta(respuestaUsuario) {
+      return false;
+    }
+  }
+  
+  // Pregunta: ¿Qué Pokémon es este? (con imagen)
+  class PreguntaImagen extends Pregunta {
+    get tipo() {
+      return 'Imagen';
+    }
+  
+    mostrarPregunta() {
+      return `
+        <p>¿Cuál es el nombre de este Pokémon?</p>
+        <img src="${this.pokemon.imagen}" alt="Pokemon" width="150"><br>
+        <input type="text" id="respuesta" placeholder="Escribe el nombre">
+        <button onclick="verificar()">Verificar</button>
+        <div id="resultado"></div>
+      `;
+    }
+  
+    verificarRespuesta(respuestaUsuario) {
+      return this.pokemon.nombre.toLowerCase() === respuestaUsuario.trim().toLowerCase();
+    }
+  }
+  
+  // Pregunta: ¿Cuál es uno de sus tipos? (con recursividad)
+  class PreguntaTipos extends Pregunta {
+    get tipo() {
+      return 'Tipos';
+    }
+  
+    mostrarPregunta() {
+      return `
+        <p>¿Cuál es uno de los tipos de ${this.pokemon.nombre}?</p>
+        <input type="text" id="respuesta" placeholder="Escribe un tipo">
+        <button onclick="verificar()">Verificar</button>
+        <div id="resultado"></div>
+      `;
+    }
+  
+    verificarRespuesta(respuestaUsuario) {
+      // Recursividad para buscar dentro del array de tipos
+      function buscarTipo(tipos, respuesta) {
+        if (tipos.length === 0) return false;
+        const [primero, ...resto] = tipos;
+        if (primero.toLowerCase() === respuesta.trim().toLowerCase()) return true;
+        return buscarTipo(resto, respuesta);
+      }
+  
+      return buscarTipo(this.pokemon.tipos, respuestaUsuario);
+    }
+  }
+  
+  // Variable global para mantener la pregunta activa
+  let preguntaActual = null;
+  
+  // Evento para generar una nueva pregunta aleatoria
+  document.getElementById('generar').addEventListener('click', async () => {
+    const id = Math.floor(Math.random() * 151) + 1;
+    const res = await fetch(`https://pokeapi.co/api/v2/pokemon/${id}`);
+    const data = await res.json();
+    const pokemon = new Pokemon(data);
+  
+    // Elegimos tipo de pregunta de forma aleatoria
+    const tipoPregunta = Math.random() > 0.5 ? 'imagen' : 'tipo';
+    preguntaActual = tipoPregunta === 'imagen' 
+      ? new PreguntaImagen(pokemon) 
+      : new PreguntaTipos(pokemon);
+  
+    // Mostrar la pregunta
+    const container = document.getElementById('preguntaContainer');
+    container.innerHTML = `<strong>Tipo:</strong> ${preguntaActual.tipo}<br>${preguntaActual.mostrarPregunta()}`;
+  });
+  
+  // Función global para verificar la respuesta del usuario
+  window.verificar = function () {
+    const input = document.getElementById('respuesta');
+    const resultado = document.getElementById('resultado');
+  
+    if (!preguntaActual) return;
+  
+    const esCorrecta = preguntaActual.verificarRespuesta(input.value);
+    resultado.innerHTML = esCorrecta
+      ? '<span style="color: green;">¡Correcto! ✅</span>'
+      : `<span style="color: red;">Incorrecto ❌</span>`;
+  };
