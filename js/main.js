@@ -235,7 +235,7 @@ function mostrarIntento(intentoPokemon, pistas) {
         const tipo = intentoPokemon.tipos[i] || "";
         const pistaTipo = pistas.tipos && pistas.tipos[i];
         const tipoCasilla = crearCasilla(tipo.toUpperCase());
-
+        
         if (tipo) {
             if (secretoTipos.includes(tipo)) {
                 tipoCasilla.classList.add("parcial"); // El tipo existe en el Pokémon secreto
@@ -398,106 +398,107 @@ iniciarJuego();
 
 }
 
-//PREGUNTAS
+
+// PREGUNTAS
 
 // Clase base Pregunta
 class Pregunta {
     constructor(pokemon) {
-      this.pokemon = pokemon;
+        this.pokemon = pokemon;
     }
-  
+
     get tipo() {
-      return 'Genérica';
+        return 'Genérica';
     }
-  
+
     mostrarPregunta() {
-      return `<p>Pregunta genérica</p>`;
+        return `<p>Pregunta genérica</p>`;
     }
-  
+
     verificarRespuesta(respuestaUsuario) {
-      return false;
+        return false;
     }
-  }
-  
-  // Pregunta: ¿Qué Pokémon es este? (con imagen)
-  class PreguntaImagen extends Pregunta {
+}
+
+// Pregunta: ¿Qué Pokémon es este? (con imagen)
+class PreguntaImagen extends Pregunta {
     get tipo() {
-      return 'Imagen';
+        return 'Imagen';
     }
-  
+
     mostrarPregunta() {
-      return `
-        <p>¿Cuál es el nombre de este Pokémon?</p>
-        <img src="${this.pokemon.imagen}" alt="Pokemon" width="150"><br>
-        <input type="text" id="respuesta" placeholder="Escribe el nombre">
-        <button onclick="verificar()">Verificar</button>
-        <div id="resultado"></div>
-      `;
+        return `
+            <p>¿Cuál es el nombre de este Pokémon?</p>
+            <img src="${this.pokemon.imagen}" alt="Pokemon" width="150"><br>
+            <input type="text" id="respuesta" placeholder="Escribe el nombre">
+            <button onclick="verificar()">Verificar</button>
+            <div id="resultado"></div>
+        `;
     }
-  
+
     verificarRespuesta(respuestaUsuario) {
-      return this.pokemon.nombre.toLowerCase() === respuestaUsuario.trim().toLowerCase();
+        return this.pokemon.nombre.toLowerCase() === respuestaUsuario.trim().toLowerCase();
     }
-  }
-  
-  // Pregunta: ¿Cuál es uno de sus tipos? (con recursividad)
-  class PreguntaTipos extends Pregunta {
+}
+
+// Pregunta: ¿Cuál es uno de sus tipos? (con recursividad)
+class PreguntaTipos extends Pregunta {
     get tipo() {
-      return 'Tipos';
+        return 'Tipos';
     }
-  
+
     mostrarPregunta() {
-      return `
-        <p>¿Cuál es uno de los tipos de ${this.pokemon.nombre}?</p>
-        <input type="text" id="respuesta" placeholder="Escribe un tipo">
-        <button onclick="verificar()">Verificar</button>
-        <div id="resultado"></div>
-      `;
+        return `
+            <p>¿Cuál es uno de los tipos de ${this.pokemon.nombre}?</p>
+            <input type="text" id="respuesta" placeholder="Escribe un tipo">
+            <button onclick="verificar()">Verificar</button>
+            <div id="resultado"></div>
+        `;
     }
-  
+
     verificarRespuesta(respuestaUsuario) {
-      // Recursividad para buscar dentro del array de tipos
-      function buscarTipo(tipos, respuesta) {
-        if (tipos.length === 0) return false;
-        const [primero, ...resto] = tipos;
-        if (primero.toLowerCase() === respuesta.trim().toLowerCase()) return true;
-        return buscarTipo(resto, respuesta);
-      }
-  
-      return buscarTipo(this.pokemon.tipos, respuestaUsuario);
+        // Recursividad para buscar dentro del array de tipos
+        function buscarTipo(tipos, respuesta) {
+            if (tipos.length === 0) return false;
+            const [primero, ...resto] = tipos;
+            if (primero.toLowerCase() === respuesta.trim().toLowerCase()) return true;
+            return buscarTipo(resto, respuesta);
+        }
+
+        return buscarTipo(this.pokemon.tipos, respuestaUsuario);
     }
-  }
-  
-  // Variable global para mantener la pregunta activa
-  let preguntaActual = null;
-  
-  // Evento para generar una nueva pregunta aleatoria
-  document.getElementById('generar').addEventListener('click', async () => {
+}
+
+// Variable global para mantener la pregunta activa
+let preguntaActual = null;
+
+// Evento para generar una nueva pregunta aleatoria
+document.getElementById('generar').addEventListener('click', async () => {
     const id = Math.floor(Math.random() * 151) + 1;
     const res = await fetch(`https://pokeapi.co/api/v2/pokemon/${id}`);
     const data = await res.json();
     const pokemon = new Pokemon(data);
-  
+
     // Elegimos tipo de pregunta de forma aleatoria
     const tipoPregunta = Math.random() > 0.5 ? 'imagen' : 'tipo';
     preguntaActual = tipoPregunta === 'imagen' 
-      ? new PreguntaImagen(pokemon) 
-      : new PreguntaTipos(pokemon);
-  
+        ? new PreguntaImagen(pokemon) 
+        : new PreguntaTipos(pokemon);
+
     // Mostrar la pregunta
     const container = document.getElementById('preguntaContainer');
     container.innerHTML = `<strong>Tipo:</strong> ${preguntaActual.tipo}<br>${preguntaActual.mostrarPregunta()}`;
-  });
-  
-  // Función global para verificar la respuesta del usuario
-  window.verificar = function () {
+});
+
+// Función global para verificar la respuesta del usuario
+window.verificar = function () {
     const input = document.getElementById('respuesta');
     const resultado = document.getElementById('resultado');
-  
+
     if (!preguntaActual) return;
-  
+
     const esCorrecta = preguntaActual.verificarRespuesta(input.value);
     resultado.innerHTML = esCorrecta
-      ? '<span style="color: green;">¡Correcto! ✅</span>'
-      : `<span style="color: red;">Incorrecto ❌</span>`;
-  };
+        ? '<span style="color: green;">¡Correcto!</span>'
+        : `<span style="color: red;">Incorrecto</span>`;
+};
