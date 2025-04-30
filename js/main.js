@@ -498,6 +498,6 @@ class Pregunta {
   
     const esCorrecta = preguntaActual.verificarRespuesta(input.value);
     resultado.innerHTML = esCorrecta
-      ? '<span style="color: green;">¡Correcto! ✅</span>'
-      : `<span style="color: red;">Incorrecto ❌</span>`;
+      ? '<span style="color: green;">¡Correcto! </span>'
+      : `<span style="color: red;">Incorrecto </span>`;
   };
