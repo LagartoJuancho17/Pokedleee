@@ -4,6 +4,7 @@
     --clr-black: #1c1c1c;
     --clr-gray: #ececec;
     --clr-white: #f7f7f7;
+    --clr-blue: #007BFF;
 
     --type-normal: #A8A878;
     --type-fire: #F08030;
@@ -25,6 +26,32 @@
     --type-fairy: #F0B6BC;
 }
 
+.crear-pokemon {
+    display: flex; /* Usar Flexbox para centrar */
+    justify-content: center; /* Centrar horizontalmente */
+    align-items: center; /* Centrar verticalmente */
+    text-align: center;
+    width: 100%; /* Ancho del contenedor */
+    height: 150px; /* Alto del contenedor */
+    cursor: pointer; /* Cambiar el cursor al pasar el mouse */
+    background-color: var(--clr-gray); /* Fondo blanco */
+}
+
+.crear-pokemon button {
+   font-size: 3rem; /* Tamaño del texto del botón */
+    background: none; /* Sin fondo */
+    border: none; /* Sin borde */
+    color: var(--clr-gray); /* Color del texto */
+    cursor: pointer; /* Cambiar el cursor al pasar el mouse */
+    background-color: var(--clr-blue);
+    width: 80px;
+    height: 80px;
+    border-radius: 100%;
+    padding: 0; /* Eliminar padding adicional */
+    margin: 0; /* Eliminar márgenes adicionales */
+}
+
+
 * {
     margin: 0;
     padding: 0;
@@ -36,8 +63,8 @@
 /* MENU PRINCIPAL*/
 #menuPrincipal {
     font-family: 'Arial', sans-serif;
-    background-color: #f4f4f9;
-    color: #333;
+    background-color: var(--clr-white);
+    color: var(--clr-black);
     margin: 0;
     padding: 0;
     display: flex;
@@ -48,7 +75,7 @@
 }
 #menuPrincipal h1 {
     font-size: 3rem;
-    color: #007BFF;
+    color: var(--clr-blue);
     margin-bottom: 20px;
 }
 .menu {
@@ -60,8 +87,8 @@
     display: inline-block;
     padding: 15px 30px;
     text-decoration: none;
-    color: white;
-    background-color: #007BFF;
+    color: var(--clr-white);
+    background-color: var(--clr-blue);
     border-radius: 5px;
     font-size: 1.2rem;
     font-weight: bold;
@@ -76,9 +103,8 @@ footer {
     position: absolute;
     bottom: 10px;
     font-size: 0.9rem;
-    color: #666;
+    color: var(--clr-gray);
 }
-
 
 
 
@@ -199,6 +225,8 @@ main {
 
 .pokemon-imagen img {
     width: 100%;
+    width: 96px;
+    height: 96px;
     max-width: 6rem;
 }
 
@@ -355,10 +383,8 @@ main {
 
 /* POKEDLE ESTILOS*/
 .pokedle-body{
-
-    font-family: 'Arial', sans-serif;
-    background-color: #f4f4f9;
-    color: #333;
+    background-color: var(--clr-gray);
+    color: var(--clr-black);
     margin: 0;
     padding: 0;
     display: flex;
@@ -387,13 +413,16 @@ main {
 }
 
 .casilla {
-    border: 1px solid #ccc;
-    padding: 10px;
+    border: 2px solid #ccc;
+    border-radius: 5px;
+    padding: 15px;
     text-align: center;
-    white-space: nowrap; /* Evitar que el texto se rompa */
-    overflow: hidden; /* Ocultar el texto que se desborda */
-    text-overflow: ellipsis; /* Mostrar "..." para el texto desbordado */
+    font-size: 1.2rem;
+    background-color: var(--clr-gray);
+    color: var(--clr-black);
+    transition: transform 0.2s ease, background-color 0.3s ease;
 }
+
 
 .correcto {
     background-color: #66bb6a; /* Verde */
@@ -411,25 +440,196 @@ main {
 
 #formulario-intento {
     display: flex;
+    justify-content: center;
+    align-items: center;
     gap: 10px;
-    margin-bottom: 10px;
+    margin-top: 20px;
 }
 
 #input-pokemon {
-    padding: 8px;
-    border: 1px solid #ccc;
-    flex-grow: 1; /* Para que el input ocupe más espacio */
+    padding: 10px;
+    font-size: 1rem;
+    border: 2px solid #ccc;
+    border-radius: 5px;
+    width: 200px;
+    transition: border-color 0.3s ease;
+}
+
+#input-pokemon:focus {
+    border-color: var(--clr-blue);
+    outline: none;
 }
 
 #enviar-intento {
-    padding: 8px 15px;
-    background-color: #4CAF50;
-    color: white;
+    padding: 10px 20px;
+    font-size: 1rem;
+    background-color: var(--clr-blue);
+    color: var(--clr-white);
     border: none;
+    border-radius: 5px;
     cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+#enviar-intento:hover {
+    background-color: #0056b3;
+    transform: scale(1.05);
 }
 
 #mensajes {
-    font-weight: bold;
+    margin-top: 20px;
     text-align: center;
+    font-size: 1.2rem;
+    color: var(--clr-black);
+    background-color: var(--clr-gray);
+    padding: 10px;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.btn-volver {
+    position: absolute;
+    top: 10px;
+    left: 10px; /*Izquierda de todo*/
+    background-color: var(--clr-blue);
+    color: var(--clr-white); 
+    border: none;
+    border-radius: 5px;
+    padding: 10px 15px;
+    font-size: 1rem; 
+    cursor: pointer; 
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.btn-volver:hover {
+    background-color: #0056b3; /* Color más oscuro al pasar el mouse */
+    transform: scale(1.05); /* Efecto de zoom */
+}
+
+
+
+
+/* Estilo general del cuerpo */
+.preguntas-body {
+    background-color: var(--clr-gray);
+    color: var(--clr-black);
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+}
+
+/* Botón de volver */
+.btn-volver {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    background-color: var(--clr-blue);
+    color: var(--clr-white);
+    border: none;
+    border-radius: 5px;
+    padding: 10px 15px;
+    font-size: 1rem;
+    cursor: pointer;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.btn-volver:hover {
+    background-color: #0056b3;
+    transform: scale(1.05);
+}
+
+/* Título */
+h1 {
+    font-size: 2.5rem;
+    color: var(--clr-blue);
+    text-align: center;
+    margin-bottom: 20px;
+
+}
+
+.preguntas-main{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.pregunta-container {
+    background-color: var(--clr-white);
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    text-align: center;
+    max-width: 600px;
+    width: 90%;
+    margin-bottom: 20px;
+}
+
+/* Botón de generar pregunta */
+.btn-generar {
+    background-color: var(--clr-blue);
+    color: var(--clr-white);
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.btn-generar:hover {
+    background-color: #0056b3;
+    transform: scale(1.05);
+}
+
+/* Estilo para las preguntas */
+.pregunta-container p {
+    font-size: 1.2rem;
+    margin-bottom: 15px;
+}
+
+.pregunta-container img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 10px;
+    margin: 10px 0;
+}
+
+.pregunta-container input {
+    width: 80%;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 1rem;
+}
+
+.pregunta-container button {
+    background-color: var(--clr-blue);
+    color: var(--clr-white);
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.pregunta-container button:hover {
+    background-color: #0056b3;
+    transform: scale(1.05);
+}
+
+/* Mensajes de resultado */
+#resultado {
+    margin-top: 10px;
+    font-size: 1.2rem;
+    font-weight: bold;
 }

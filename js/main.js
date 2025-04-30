@@ -50,42 +50,44 @@ class Pokemon{
         if (window.location.pathname.includes("index.html") || window.location.pathname === "/") { //Solo actua si esta en el index.html porque sino rompe la otra pagina
 
 
-function mostrarPokemon(data){ //agarro la data del fetch para usar como parametro 
-    const pokemon = new Pokemon(data); //instancio la clase Pokemon y le paso la data de fetch como parametro
+function mostrarPokemon(data) {
+    const pokemon = new Pokemon(data);
 
-    let pokeId = pokemon.id.toString(); //convierto el id a string para poder usarlo en el html
+    let pokeId = pokemon.id.toString();
     if (pokeId.length === 1) {
-        pokeId = "00" + pokeId; //si el id tiene un solo digito le agrego 00
-    }else if(pokeId.length === 2){
-        pokeId = "0" + pokeId; //si el id tiene 2 digitos le agrego un 0
+        pokeId = "00" + pokeId;
+    } else if (pokeId.length === 2) {
+        pokeId = "0" + pokeId;
     }
 
-
-    const div = document.createElement("div"); //creo un div
-    div.classList.add("pokemon"); //le agrego la clase pokemon
+    const div = document.createElement("div");
+    div.classList.add("pokemon");
     div.innerHTML = `
         <p class="pokemon-id-back">${pokeId}</p>
-                    <div class="pokemon-imagen">
-                        <img src="${pokemon.imagen}" alt="${pokemon.name}">
-                    </div>
-                    <div class="pokemon-info">
-                        <div class="nombre-contenedor">
-                            <p class="pokemon-id">${pokeId}</p>
-                            <h2 class="pokemon-nombre">${pokemon.nombre}</h2>
-                        </div>
-                        <div class="pokemon-tipos">
-                        ${pokemon.tipos.map(tipo => `<p class="${tipo} tipo">${tipo.toUpperCase()}</p>`).join("")}
-                        </div>
-                        <div class="pokemon-stats">
-                            <p class="stat">${pokemon.peso}</p>
-                            <p class="stat">${pokemon.altura }</p>
-                        </div>
-                    </div>
-    `; 
+        <div class="pokemon-imagen">
+            <img src="${pokemon.imagen}" alt="${pokemon.nombre}">
+        </div>
+        <div class="pokemon-info">
+            <div class="nombre-contenedor">
+                <p class="pokemon-id">${pokeId}</p>
+                <h2 class="pokemon-nombre">${pokemon.nombre}</h2>
+            </div>
+            <div class="pokemon-tipos">
+                ${pokemon.tipos.map(tipo => `<p class="${tipo} tipo">${tipo.toUpperCase()}</p>`).join("")}
+            </div>
+            <div class="pokemon-stats">
+                <p class="stat">${pokemon.peso}</p>
+                <p class="stat">${pokemon.altura}</p>
+            </div>
+            <button class="btn-eliminar" data-id="${pokemon.id}">Eliminar</button>
+        </div>
+    `;
 
-    //Agregar el div!!!
-    const listaPokemon = document.querySelector("#listaPokemon"); //busco el contenedor de pokemones
-    listaPokemon.appendChild(div); //agrego el div a la lista de pokemones
+    const listaPokemon = document.querySelector("#listaPokemon");
+    listaPokemon.appendChild(div);
+
+    // Agregar evento al botón de eliminar
+    div.querySelector(".btn-eliminar").addEventListener("click", () => eliminarPokemon(pokemon.id));
 }
 
 botonesHeader.forEach(boton => boton.addEventListener("click", (e) => {
@@ -142,10 +144,79 @@ for (let i = 1; i <= 151; i++) {
 cargarTodosLosPokemones(); 
 
 
+//AGREGAR POKEMON NUEVOOOO
+document.getElementById("btn-crear-pokemon").addEventListener("click", () => {
+    const password = prompt("Ingrese la contraseña de administrador:");
+    if (password === "admin123") { // CONTRASEÑA ADMIN
+        const nombre = prompt("Ingrese el nombre del Pokémon:");
+        const tipos = prompt("Ingrese los tipos del Pokémon (separados por comas):").split(",");
+        const imagen = prompt("Ingrese la URL de la imagen del Pokémon:");
+        const altura = parseFloat(prompt("Ingrese la altura del Pokémon (en metros):")); // Convertir a decímetros
+        const peso = parseFloat(prompt("Ingrese el peso del Pokémon (en kilogramos):")); // Convertir a hectogramos
+        const habilidades = prompt("Ingrese las habilidades del Pokémon (separadas por comas):").split(","); // Convertir a array de habilidades 
+
+        const nuevoPokemon = {
+            id: Math.floor(Math.random() * 1000) + 152, // Generar un ID único para el nuevo Pokémon (entre 152 y 1152) 
+            name: nombre,
+            types: tipos.map(tipo => ({ type: { name: tipo.trim() } })),
+            sprites: { other: { "official-artwork": { front_default: imagen } } },
+            height: altura,
+            weight: peso,
+            abilities: habilidades.map(habilidad => ({ ability: { name: habilidad.trim() } }))
+        };
+
+        // Guardar en localStorage
+        guardarPokemonEnLocalStorage(nuevoPokemon);
+        // Guardar como Pokémon secreto para el Pokedle
+        localStorage.setItem("pokemonSecreto", JSON.stringify(nuevoPokemon));
+
+
+        mostrarPokemon(nuevoPokemon); // REUTILIZACIOOON
+        alert("¡Nuevo Pokémon creado exitosamente!");
+    } else {
+        alert("Contraseña incorrecta. No tienes permisos para crear un Pokémon.");
+    }
+});
+// Función para guardar el Pokémon en localStorage
+function guardarPokemonEnLocalStorage(pokemon) {
+    let pokemonesGuardados = JSON.parse(localStorage.getItem("pokemones")) || []; // Obtener los Pokémon existentes
+    pokemonesGuardados.push(pokemon); // Agregar el nuevo Pokémon
+    localStorage.setItem("pokemones", JSON.stringify(pokemonesGuardados)); // Guardar en localStorage
+}
+function cargarPokemonesDesdeLocalStorage() {
+    const pokemonesGuardados = JSON.parse(localStorage.getItem("pokemones")) || [];
+    pokemonesGuardados.forEach(pokemon => mostrarPokemon(pokemon)); // Mostrar cada Pokémon guardado
+}
+
+function eliminarPokemon(id) {
+    const password = prompt("Ingrese la contraseña de administrador:");
+    if(password !== "admin123") { // Cambia "admin123" por la contraseña que desees
+        alert("Contraseña incorrecta. No tienes permisos para eliminar un Pokémon.");
+        return;
+    }else{
+    let pokemonesGuardados = JSON.parse(localStorage.getItem("pokemones")) || [];
+    pokemonesGuardados = pokemonesGuardados.filter(pokemon => pokemon.id !== id); // Filtrar el Pokémon a eliminar
+    localStorage.setItem("pokemones", JSON.stringify(pokemonesGuardados)); // Actualizar localStorage
+
+    // Eliminar el Pokémon de la lista en la página
+    const listaPokemon = document.querySelector("#listaPokemon");
+    const pokemonDiv = listaPokemon.querySelector(`.btn-eliminar[data-id="${id}"]`).parentElement.parentElement;
+    listaPokemon.removeChild(pokemonDiv);
+
+    alert("¡Pokémon eliminado exitosamente!");
+    
+    }
+}
+
+
+// Llamar a la función al cargar la página
+cargarPokemonesDesdeLocalStorage();
         }
 
+
+
 //POKEDLE
-if (window.location.pathname.includes("pokedle.html") || window.location.pathname === "/") { //Solo actua si esta en el index.html porque sino rompe la otra pagina
+if (window.location.pathname.includes("pokedle.html") || window.location.pathname === "/") { //Solo funciona si esta en el index.html porque sino rompe la otra pagina
 
 console.log("Hola Pokedle")
 
@@ -328,6 +399,7 @@ async function seleccionarPokemonSecreto() {
 }*/
 
 //SELECCIONO MANUALMENTE EL POKEMON
+/*
 async function seleccionarPokemonSecreto(id) {
     try {
         pokemonSecreto = await obtenerPokemon(id); // Obtiene el Pokémon usando el ID proporcionado
@@ -335,15 +407,31 @@ async function seleccionarPokemonSecreto(id) {
     } catch (error) {
         console.error("Error al seleccionar el Pokémon secreto:", error);
     }
+}*/
+
+async function seleccionarPokemonSecreto() {
+    const pokemonSecretoGuardado = localStorage.getItem("pokemonSecreto");
+
+    if (pokemonSecretoGuardado) {
+        // Si hay un Pokémon secreto guardado, lo uso
+        const data = JSON.parse(pokemonSecretoGuardado);
+        pokemonSecreto = new Pokemon(data); // Crear una instancia de la clase Pokemon
+        console.log("Pokémon secreto seleccionado desde localStorage:", pokemonSecreto);
+    } else {
+        // Aleatorio
+        const randomIndex = Math.floor(Math.random() * 151) + 1; // Solo los Pokémon de Gen 1
+        pokemonSecreto = await obtenerPokemon(randomIndex);
+        console.log("Pokémon secreto seleccionado aleatoriamente:", pokemonSecreto);
+    }
 }
 
 
 async function manejarIntento() {
-    const nombreIntento = inputPokemon.value.trim(); //Valor ingresado por el usuuario
+    const nombreIntento = inputPokemon.value; //Valor ingresado por el usuuario 
     inputPokemon.value = "";
 
     if (!nombreIntento) {
-        mensajes.textContent = "Por favor, ingresa el nombre de un Pokémon.";
+        mensajes.textContent = "Iingresa el nombre de un Pokémon.";
         return;
     }
 
@@ -372,8 +460,8 @@ async function manejarIntento() {
 }
 
 async function iniciarJuego() {
-    mensajes.textContent = `Tienes ${numeroIntentos} intentos para adivinar el Pokémon.`;
-    await seleccionarPokemonSecreto(15); //SACAR ESTO SI NO QUIERO QUE SELECCIONE UN POKEMON RANDOM
+    mensajes.textContent = `Tienes ${numeroIntentos} intentos para adivinar el Pokemon.`;
+    await seleccionarPokemonSecreto(); //SACAR ESTO SI NO QUIERO QUE SELECCIONE UN POKEMON RANDOM
 
     // Crear la estructura de las pistas en el tablero (encabezados)
     const encabezados = document.createElement("div");
@@ -420,7 +508,7 @@ class Pregunta {
     }
 }
 
-// Pregunta: ¿Qué Pokémon es este? (con imagen)
+// Pregunta: Qué Pokémon es este? (con imagen)
 class PreguntaImagen extends Pregunta {
     get tipo() {
         return 'Imagen';
@@ -499,6 +587,6 @@ window.verificar = function () {
 
     const esCorrecta = preguntaActual.verificarRespuesta(input.value);
     resultado.innerHTML = esCorrecta
-      ? '<span style="color: green;">¡Correcto! ✅</span>'
-      : `<span style="color: red;">Incorrecto ❌</span>`;
+      ? '<span style="color: green;">¡Correcto! </span>'
+      : `<span style="color: red;">Incorrecto </span>`;
   };

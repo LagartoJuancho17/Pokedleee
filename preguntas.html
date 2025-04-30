@@ -1,14 +1,25 @@
-<!-- polimorfismo.html -->
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Preguntas Polimórficas</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Preguntas Pokémon</title>
+    <link rel="stylesheet" href="css/main.css">
 </head>
-<body>
-    <h1>Preguntas con Polimorfismo</h1>
-    <button id="generar">Generar pregunta aleatoria</button>
-    <div id="preguntaContainer"></div>
-<script src="/js/main.js"></script>
+<body class="preguntas-body">
+    <header>
+        <button id="btn-volver-menu" class="btn-volver" onclick="window.location.href='menuPrincipal.html'">
+             Volver
+        </button>
+    </header>
+    <main class="preguntas-main">
+    <h1>Preguntas Pokémon</h1>
+        <div id="preguntaContainer" class="pregunta-container">
+            <p>Haz clic en "Generar Pregunta" para comenzar.</p>
+        </div>
+        <button id="generar" class="btn-generar">Generar Pregunta</button>
+    </main>
+
+    <script src="js/main.js"></script>
 </body>
 </html>
