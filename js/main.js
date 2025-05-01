@@ -179,7 +179,7 @@ document.getElementById("btn-crear-pokemon").addEventListener("click", () => {
 });
 // Función para guardar el Pokémon en localStorage
 function guardarPokemonEnLocalStorage(pokemon) {
-    let pokemonesGuardados = JSON.parse(localStorage.getItem("pokemones")) || []; // Obtener los Pokémon existentes
+    let pokemonesGuardados = JSON.parse(localStorage.getItem("pokemones")) || []; // Obtener los pokemon existentes
     pokemonesGuardados.push(pokemon); // Agregar el nuevo Pokémon
     localStorage.setItem("pokemones", JSON.stringify(pokemonesGuardados)); // Guardar en localStorage
 }
@@ -245,7 +245,6 @@ const generaciones = {
     9: [906, 1010],
 };
 
-// Mapeo de tipos a colores
 
 //Obtengo los datos del pokemon secreto 
 async function obtenerPokemon(id) { 
@@ -260,7 +259,7 @@ async function obtenerPokemon(id) {
 }
 
 //Obtengo los datos del pokemon por nombre que ingresa el usuario
-async function obtenerPokemonPorNombre(nombre) {
+async function obtenerPokemonPorNombre(nombre) { 
     try {
         const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${nombre.toLowerCase()}`);
         const data = await response.json();
@@ -568,7 +567,7 @@ document.getElementById('generar').addEventListener('click', async () => {
     const pokemon = new Pokemon(data);
 
     // Elegimos tipo de pregunta de forma aleatoria
-    const tipoPregunta = Math.random() > 0.5 ? 'imagen' : 'tipo';
+    const tipoPregunta = Math.random() > 0.5 ? 'imagen' : 'tipo'; //50 50 de probabilidades
     preguntaActual = tipoPregunta === 'imagen' 
         ? new PreguntaImagen(pokemon) 
         : new PreguntaTipos(pokemon);
