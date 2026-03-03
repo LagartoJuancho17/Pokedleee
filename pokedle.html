@@ -1,16 +1,18 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pokedle</title>
+    <title>Pokedle - PokéApp</title>
     <link rel="stylesheet" href="css/main.css">
+    <!-- GSAP for animations -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
 </head>
 <body class="pokedle-body">
     <button id="btn-volver-menu" class="btn-volver" onclick="window.location.href='menuPrincipal.html'">
                 Volver
             </button>
-    <h1>Pokedle Personalizado</h1>
+    <h1 style="color: var(--clr-yellow); text-shadow: 2px 2px 4px rgba(0,0,0,0.5), -2px -2px 0 #cc0000, 2px -2px 0 #cc0000, -2px 2px 0 #cc0000, 2px 2px 0 #cc0000;">Pokedle Personalizado</h1>
 
     <div id="tablero">
         </div>
@@ -24,5 +26,33 @@
         </div>
 
     <script src="js/main.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const tl = gsap.timeline();
+            
+            // Back button drop in
+            tl.from(".btn-volver", {
+                y: -50,
+                opacity: 0,
+                duration: 0.6,
+                ease: "bounce.out"
+            })
+            // Title fade & slide up
+            .from("h1", {
+                y: 30,
+                opacity: 0,
+                duration: 0.8,
+                ease: "power2.out"
+            }, "-=0.3")
+            // Form & Messages fade
+            .from("#formulario-intento, #mensajes", {
+                y: 20,
+                opacity: 0,
+                duration: 0.4,
+                stagger: 0.1,
+                ease: "power2.out"
+            }, "-=0.2");
+        });
+    </script>
 </body>
 </html>

@@ -1,14 +1,15 @@
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pokédex</title>
+    <title>Pokédex - PokéApp</title>
     <link rel="stylesheet" href="./css/main.css">
+    <!-- GSAP for animations -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
 </head>
-<body class>
+<body id="pokedexBody">
         <nav class="nav">
             <button id="btn-volver-menu" class="btn-volver" onclick="window.location.href='menuPrincipal.html'">
                 Volver
@@ -52,5 +53,34 @@
     </main>
 
     <script src="js/main.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const tl = gsap.timeline();
+            
+            // Animate Nav Bar
+            tl.from(".nav", {
+                y: -100,
+                opacity: 0,
+                duration: 0.8,
+                ease: "power3.out"
+            })
+            // Animate Logo
+            .from(".logo", {
+                scale: 0,
+                opacity: 0,
+                rotation: -10,
+                duration: 0.6,
+                ease: "back.out(1.7)"
+            }, "-=0.2")
+            // Stagger Type Buttons
+            .from(".nav-item", {
+                y: -20,
+                opacity: 0,
+                duration: 0.4,
+                stagger: 0.05,
+                ease: "power2.out"
+            }, "-=0.2");
+        });
+    </script>
 </body>
 </html>

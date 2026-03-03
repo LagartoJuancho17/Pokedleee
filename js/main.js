@@ -108,6 +108,7 @@ botonesHeader.forEach(boton => boton.addEventListener("click", (e) => {
                 const tipos = data.types.map(type => type.type.name); //map me devuelve un array con los tipos de pokemon
                 if(tipos.some(tipo => tipo.includes(botonId))){
                     mostrarPokemon(data);
+                    console.log(data)
                 }
             })
     }

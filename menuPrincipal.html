@@ -1,18 +1,52 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Menú Principal</title>
+    <title>Menú Principal - Pokedex App</title>
     <link rel="stylesheet" href="css/main.css">
+    <!-- GSAP for animations -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
 </head>
 <body id="menuPrincipal">
-    <h1 id="h1MenuPrincipal">Menú Principal</h1>
-    <div class="menu">
-        <a class="aMenuPrincipal" href="index.html">Pokedex</a>
-        <a class="aMenuPrincipal" href="pokedle.html">Pokedle</a>
-        <a class="aMenuPrincipal" href="preguntas.html">Preguntas</a>
+    
+    <!-- Floating background decorative elements could go here -->
+
+    <div class="menu-container">
+        <h1 id="h1MenuPrincipal">PokéApp</h1>
+        <div class="menu">
+            <a class="aMenuPrincipal" href="index.html">Pokédex</a>
+            <a class="aMenuPrincipal" href="pokedle.html">Pokédle</a>
+            <a class="aMenuPrincipal" href="preguntas.html">Preguntas</a>
+        </div>
     </div>
-    <footer>© 2025 Pokedex App</footer>
+    
+    <footer>© 2024 PokéApp by Toto</footer>
+
+    <script>
+        // GSAP Animations on Load
+        document.addEventListener("DOMContentLoaded", (event) => {
+            if (typeof gsap !== "undefined") {
+                const tl = gsap.timeline();
+                
+                // Animate title bouncing in
+                tl.from("#h1MenuPrincipal", {
+                    y: -30,
+                    opacity: 0,
+                    duration: 0.8,
+                    ease: "bounce.out"
+                })
+                // Stagger animate menu options
+                .from(".aMenuPrincipal", {
+                    y: 20,
+                    opacity: 0,
+                    duration: 0.3,
+                    stagger: 0.08,
+                    ease: "power2.out",
+                    clearProps: "all" // Clears GSAP inline styles after animation finishes to prevent stuck opacity
+                });
+            }
+        });
+    </script>
 </body>
 </html>

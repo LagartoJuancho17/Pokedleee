@@ -1,635 +1,707 @@
-@import url('https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500;600;700;800;900&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500;600;700;800;900&display=swap");
 
 :root {
-    --clr-black: #1c1c1c;
-    --clr-gray: #ececec;
-    --clr-white: #f7f7f7;
-    --clr-blue: #007BFF;
+  --clr-black: #1c1c1c;
+  --clr-gray: #ececec;
+  --clr-white: #f7f7f7;
+  --clr-blue: #3b4cca;
+  --clr-yellow: #ffde00;
+  --clr-red: #cc0000;
+  --clr-bg-gradient: linear-gradient(135deg, #1a2a6c, #112ce8, #403bca);
 
-    --type-normal: #A8A878;
-    --type-fire: #F08030;
-    --type-water: #6890F0;
-    --type-grass: #78C850;
-    --type-electric: #F8D030;
-    --type-ice: #98D8D8;
-    --type-fighting: #C03028;
-    --type-poison: #A040A0;
-    --type-ground: #E0C068;
-    --type-flying: #A890F0;
-    --type-psychic: #F85888;
-    --type-bug: #A8B820;
-    --type-rock: #B8A038;
-    --type-ghost: #705898;
-    --type-dark: #705848;
-    --type-dragon: #7038F8;
-    --type-steel: #B8B8D0;
-    --type-fairy: #F0B6BC;
+  --type-normal: #a8a878;
+  --type-fire: #f08030;
+  --type-water: #6890f0;
+  --type-grass: #78c850;
+  --type-electric: #f8d030;
+  --type-ice: #98d8d8;
+  --type-fighting: #c03028;
+  --type-poison: #a040a0;
+  --type-ground: #e0c068;
+  --type-flying: #a890f0;
+  --type-psychic: #f85888;
+  --type-bug: #a8b820;
+  --type-rock: #b8a038;
+  --type-ghost: #705898;
+  --type-dark: #705848;
+  --type-dragon: #7038f8;
+  --type-steel: #b8b8d0;
+  --type-fairy: #f0b6bc;
 }
 
 .crear-pokemon {
-    display: flex; /* Usar Flexbox para centrar */
-    justify-content: center; /* Centrar horizontalmente */
-    align-items: center; /* Centrar verticalmente */
-    text-align: center;
-    width: 100%; /* Ancho del contenedor */
-    height: 150px; /* Alto del contenedor */
-    cursor: pointer; /* Cambiar el cursor al pasar el mouse */
-    background-color: var(--clr-gray); /* Fondo blanco */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  width: 100%;
+  height: 150px;
+  cursor: pointer;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  border-radius: 1rem;
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease;
+}
+
+.crear-pokemon:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 40px 0 rgba(0, 0, 0, 0.5);
 }
 
 .crear-pokemon button {
-   font-size: 3rem; /* Tamaño del texto del botón */
-    background: none; /* Sin fondo */
-    border: none; /* Sin borde */
-    color: var(--clr-gray); /* Color del texto */
-    cursor: pointer; /* Cambiar el cursor al pasar el mouse */
-    background-color: var(--clr-blue);
-    width: 80px;
-    height: 80px;
-    border-radius: 100%;
-    padding: 0; /* Eliminar padding adicional */
-    margin: 0; /* Eliminar márgenes adicionales */
+  font-size: 3rem;
+  background: none;
+  border: none;
+  color: var(--clr-white);
+  cursor: pointer;
+  background-color: var(--clr-blue);
+  width: 80px;
+  height: 80px;
+  border-radius: 100%;
+  padding: 0;
+  margin: 0;
+  box-shadow: 0 0 15px rgba(59, 76, 202, 0.6);
+  transition: transform 0.3s ease;
 }
 
+.crear-pokemon:hover button {
+  transform: rotate(90deg) scale(1.1);
+}
 
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    color: var(--clr-black);
-    font-family: 'Rubik', sans-serif;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Rubik", sans-serif;
 }
 
 /* MENU PRINCIPAL*/
 #menuPrincipal {
-    font-family: 'Arial', sans-serif;
-    background-color: var(--clr-white);
-    color: var(--clr-black);
-    margin: 0;
-    padding: 0;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    height: 100vh;
+  background: var(--clr-bg-gradient);
+  background-size: 400% 400%;
+  animation: gradientBG 15s ease infinite;
+  color: var(--clr-white);
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  overflow: hidden;
+  position: relative;
 }
+
+@keyframes gradientBG {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.menu-container {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 20px;
+  padding: 3rem 4rem;
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  z-index: 10;
+}
+
 #menuPrincipal h1 {
-    font-size: 3rem;
-    color: var(--clr-blue);
-    margin-bottom: 20px;
+  font-size: 4rem;
+  color: var(--clr-yellow);
+  text-shadow:
+    2px 2px 4px rgba(0, 0, 0, 0.5),
+    -2px -2px 0 #cc0000,
+    2px -2px 0 #cc0000,
+    -2px 2px 0 #cc0000,
+    2px 2px 0 #cc0000;
+  margin-bottom: 30px;
+  letter-spacing: 2px;
+  font-weight: 900;
 }
+
 .menu {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  width: 100%;
 }
+
 .menu a {
-    display: inline-block;
-    padding: 15px 30px;
-    text-decoration: none;
-    color: var(--clr-white);
-    background-color: var(--clr-blue);
-    border-radius: 5px;
-    font-size: 1.2rem;
-    font-weight: bold;
-    transition: background-color 0.3s ease, transform 0.2s ease;
-    text-align: center;
+  display: block;
+  padding: 18px 40px;
+  text-decoration: none;
+  color: var(--clr-black);
+  background: linear-gradient(135deg, var(--clr-white) 0%, #e0e0e0 100%);
+  border-radius: 50px;
+  font-size: 1.4rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  text-align: center;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s ease;
+  border: 2px solid transparent;
 }
+
 .menu a:hover {
-    background-color: #0056b3;
-    transform: scale(1.05);
+  transform: translateY(-3px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+  border-color: var(--clr-yellow);
+  color: var(--clr-blue);
 }
+
 footer {
-    position: absolute;
-    bottom: 10px;
-    font-size: 0.9rem;
-    color: var(--clr-gray);
+  position: absolute;
+  bottom: 20px;
+  font-size: 0.9rem;
+  color: rgba(255, 255, 255, 0.6);
+  z-index: 10;
 }
-
-
 
 ul {
-    list-style-type: none;
+  list-style-type: none;
 }
 
 button {
-    background-color: transparent;
-    border: 0;
-    border-radius: 0;
+  background-color: transparent;
+  border: 0;
+  border-radius: 0;
 }
 
 body {
-    min-height: 100vh;
-    background-color: var(--clr-gray);
+  min-height: 100vh;
+  background: var(--clr-bg-gradient);
+  background-size: 400% 400%;
+  animation: gradientBG 15s ease infinite;
+  color: var(--clr-black);
 }
 
 header {
-    display: flex;
-    justify-content: center; /* Centra los elementos horizontalmente */
-    align-items: center; /* Centra los elementos verticalmente */
-    padding-block: 1rem;
-    box-shadow: 0 0 2rem -1rem rgba(0, 0, 0, .5);
+  display: flex;
+  justify-content: center; /* Centra los elementos horizontalmente */
+  align-items: center; /* Centra los elementos verticalmente */
+  padding-block: 1rem;
+  box-shadow: 0 0 2rem -1rem rgba(0, 0, 0, 0.5);
 }
 
 .logo {
-    max-width: 150px; /* Ajusta el tamaño máximo del logo */
-    height: auto; /* Mantén la proporción del logo */
-    margin-inline: auto; /* Centra horizontalmente si es un bloque */
-    display: block; /* Asegura que se comporte como un bloque */
+  max-width: 150px; /* Ajusta el tamaño máximo del logo */
+  height: auto; /* Mantén la proporción del logo */
+  margin-inline: auto; /* Centra horizontalmente si es un bloque */
+  display: block; /* Asegura que se comporte como un bloque */
 }
 
 .nav {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-    align-items: flex-start;
-    padding-inline: 2rem;
-    max-width: 1000px;
-    margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  align-items: flex-start;
+  padding-inline: 2rem;
+  max-width: 1000px;
+  margin: 0 auto;
 }
 
 .nav-list {
-    display: flex;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: .5rem;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.5rem;
 }
 
 .btn-header {
-    background-color: var(--clr-gray);
-    padding: .5rem;
-    border-radius: 100vmax;
-    cursor: pointer;
-    text-transform: uppercase;
-    font-weight: 600;
-    box-shadow: 0 0 1rem rgba(0, 0, 0, .25);
-    transition: .2s;
+  background-color: var(--clr-gray);
+  padding: 0.5rem;
+  border-radius: 100vmax;
+  cursor: pointer;
+  text-transform: uppercase;
+  font-weight: 600;
+  box-shadow: 0 0 1rem rgba(0, 0, 0, 0.25);
+  transition: 0.2s;
 }
 
 .btn-header:hover {
-    transform: scale(1.1);
-    box-shadow: 0 0 2rem rgba(0, 0, 0, .25);
+  transform: scale(1.1);
+  box-shadow: 0 0 2rem rgba(0, 0, 0, 0.25);
 }
 
 main {
-    padding: 2rem;
-    max-width: 1000px;
-    margin: 0 auto;
+  padding: 2rem;
+  max-width: 1000px;
+  margin: 0 auto;
 }
 
 .pokemon-todos {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 1rem;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
 }
 
 @media screen and (min-width: 470px) {
-    .pokemon-todos {
-        grid-template-columns: 1fr 1fr;
-    }
+  .pokemon-todos {
+    grid-template-columns: 1fr 1fr;
+  }
 }
 
 @media screen and (min-width: 700px) {
-    .pokemon-todos {
-        grid-template-columns: 1fr 1fr 1fr;
-    }
+  .pokemon-todos {
+    grid-template-columns: 1fr 1fr 1fr;
+  }
 }
 
 .pokemon {
-    border-radius: 1rem;
-    background-color: var(--clr-white);
-    box-shadow: 0 0 3rem -1rem rgba(0, 0, 0, .25);
-    padding-block: 1rem;
-    text-transform: uppercase;
-    position: relative;
-    isolation: isolate;
-    overflow: hidden;
+  border-radius: 1rem;
+  background-color: var(--clr-white);
+  box-shadow: 0 0 3rem -1rem rgba(0, 0, 0, 0.25);
+  padding-block: 1rem;
+  text-transform: uppercase;
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
 }
 
 .pokemon-id-back {
-    position: absolute;
-    top: 1rem;
-    left: 50%;
-    transform: translateX(-50%);
-    font-size: 6rem;
-    font-weight: 800;
-    z-index: -1;
-    color: var(--clr-gray);
+  position: absolute;
+  top: 1rem;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 6rem;
+  font-weight: 800;
+  z-index: -1;
+  color: var(--clr-gray);
 }
 
 .pokemon-imagen {
-    padding-inline: 1rem;
-    display: flex;
-    justify-content: center;
+  padding-inline: 1rem;
+  display: flex;
+  justify-content: center;
 }
 
 .pokemon-imagen img {
-    width: 100%;
-    width: 96px;
-    height: 96px;
-    max-width: 6rem;
+  width: 100%;
+  width: 96px;
+  height: 96px;
+  max-width: 6rem;
 }
 
 .pokemon-info {
-    display: flex;
-    flex-direction: column;
-    gap: .5rem;
-    padding-inline: 1rem;
-    align-items: center;
-    text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding-inline: 1rem;
+  align-items: center;
+  text-align: center;
 }
 
 .nombre-contenedor {
-    display: flex;
-    align-items: center;
-    column-gap: .5rem;
-    flex-wrap: wrap;
-    justify-content: center;
+  display: flex;
+  align-items: center;
+  column-gap: 0.5rem;
+  flex-wrap: wrap;
+  justify-content: center;
 }
 
 .pokemon-id {
-    background-color: var(--clr-gray);
-    padding: .25rem .5rem;
-    border-radius: 100vmax;
-    font-size: .75rem;
-    font-weight: 500;
+  background-color: var(--clr-gray);
+  padding: 0.25rem 0.5rem;
+  border-radius: 100vmax;
+  font-size: 0.75rem;
+  font-weight: 500;
 }
 
 .pokemon-nombre {
-    font-size: 1.4rem;
+  font-size: 1.4rem;
 }
 
 .pokemon-tipos {
-    display: flex;
-    gap: .5rem;
-    font-size: .75rem;
-    font-weight: 500;
-    flex-wrap: wrap;
-    justify-content: center;
+  display: flex;
+  gap: 0.5rem;
+  font-size: 0.75rem;
+  font-weight: 500;
+  flex-wrap: wrap;
+  justify-content: center;
 }
 
 .tipo {
-    padding: .25rem .5rem;
-    border-radius: 100vmax;
+  padding: 0.25rem 0.5rem;
+  border-radius: 100vmax;
 }
 
 .pokemon-stats {
-    display: flex;
-    gap: 1rem;
-    font-size: .85rem;
+  display: flex;
+  gap: 1rem;
+  font-size: 0.85rem;
 }
 
 .stat {
-    background-color: var(--clr-gray);
-    padding: .25rem .5rem;
-    border-radius: 100vmax;
+  background-color: var(--clr-gray);
+  padding: 0.25rem 0.5rem;
+  border-radius: 100vmax;
 }
 
-
-
 .normal {
-    background-color: var(--type-normal);
-    color: var(--clr-black);
+  background-color: var(--type-normal);
+  color: var(--clr-black);
 }
 
 .fire {
-    background-color: var(--type-fire);
-    color: var(--clr-black);
+  background-color: var(--type-fire);
+  color: var(--clr-black);
 }
 
 .water {
-    background-color: var(--type-water);
-    color: var(--clr-white);
+  background-color: var(--type-water);
+  color: var(--clr-white);
 }
 
 .grass {
-    background-color: var(--type-grass);
-    color: var(--clr-black);
+  background-color: var(--type-grass);
+  color: var(--clr-black);
 }
 
 .electric {
-    background-color: var(--type-electric);
-    color: var(--clr-black);
+  background-color: var(--type-electric);
+  color: var(--clr-black);
 }
 
 .ice {
-    background-color: var(--type-ice);
-    color: var(--clr-black);
+  background-color: var(--type-ice);
+  color: var(--clr-black);
 }
 
 .fighting {
-    background-color: var(--type-fighting);
-    color: var(--clr-white);
+  background-color: var(--type-fighting);
+  color: var(--clr-white);
 }
 
 .poison {
-    background-color: var(--type-poison);
-    color: var(--clr-white);
+  background-color: var(--type-poison);
+  color: var(--clr-white);
 }
 
 .ground {
-    background-color: var(--type-ground);
-    color: var(--clr-black);
+  background-color: var(--type-ground);
+  color: var(--clr-black);
 }
 
 .flying {
-    background-color: var(--type-flying);
-    color: var(--clr-black);
+  background-color: var(--type-flying);
+  color: var(--clr-black);
 }
 
 .psychic {
-    background-color: var(--type-psychic);
-    color: var(--clr-black);
+  background-color: var(--type-psychic);
+  color: var(--clr-black);
 }
 
 .bug {
-    background-color: var(--type-bug);
-    color: var(--clr-black);
+  background-color: var(--type-bug);
+  color: var(--clr-black);
 }
 
 .rock {
-    background-color: var(--type-rock);
-    color: var(--clr-black);
+  background-color: var(--type-rock);
+  color: var(--clr-black);
 }
 
 .ghost {
-    background-color: var(--type-ghost);
-    color: var(--clr-white);
+  background-color: var(--type-ghost);
+  color: var(--clr-white);
 }
 
 .dark {
-    background-color: var(--type-dark);
-    color: var(--clr-white);
+  background-color: var(--type-dark);
+  color: var(--clr-white);
 }
 
 .dragon {
-    background-color: var(--type-dragon);
-    color: var(--clr-white);
+  background-color: var(--type-dragon);
+  color: var(--clr-white);
 }
 
 .steel {
-    background-color: var(--type-steel);
-    color: var(--clr-black);
+  background-color: var(--type-steel);
+  color: var(--clr-black);
 }
 
 .fairy {
-    background-color: var(--type-fairy);
-    color: var(--clr-black);
+  background-color: var(--type-fairy);
+  color: var(--clr-black);
 }
 
-
-
-
-
 /* POKEDLE ESTILOS*/
-.pokedle-body{
-    background-color: var(--clr-gray);
-    color: var(--clr-black);
-    margin: 0;
-    padding: 0;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    min-height: 100vh;
+.pokedle-body {
+  min-height: 100vh;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 
 #tablero {
-    display: grid;
-    grid-template-columns: repeat(1, 1fr); /* Una sola columna inicialmente */
-    gap: 10px;
-    margin-bottom: 20px;
+  display: grid;
+  grid-template-columns: repeat(1, 1fr); /* Una sola columna inicialmente */
+  gap: 10px;
+  margin-bottom: 20px;
 }
 
 .intento {
-    display: grid;
-    grid-template-columns: 1fr repeat(2, 1fr) 0.8fr 0.8fr 0.8fr 1fr; /* Ajustado para las pistas */
-    gap: 5px;
+  display: grid;
+  grid-template-columns: 1fr repeat(2, 1fr) 0.8fr 0.8fr 0.8fr 1fr; /* Ajustado para las pistas */
+  gap: 5px;
 }
 
 .encabezados {
-    font-weight: bold;
-    color: #333;
+  font-weight: bold;
+  color: #333;
 }
 
 .casilla {
-    border: 2px solid #ccc;
-    border-radius: 5px;
-    padding: 15px;
-    text-align: center;
-    font-size: 1.2rem;
-    background-color: var(--clr-gray);
-    color: var(--clr-black);
-    transition: transform 0.2s ease, background-color 0.3s ease;
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  border-radius: 8px;
+  padding: 15px;
+  text-align: center;
+  font-size: 1.5rem;
+  font-weight: 700;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  color: var(--clr-white);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  transition:
+    transform 0.2s ease,
+    background-color 0.3s ease;
 }
 
-
 .correcto {
-    background-color: #66bb6a; /* Verde */
-    color: white;
+  background-color: #4ade80; /* Verde */
+  color: white;
+  border-color: #4ade80;
 }
 
 .parcial {
-    background-color: #ffee58; /* Amarillo */
+  background-color: #ffee58; /* Amarillo */
 }
 
 .incorrecto {
-    background-color: #ef5350; /* Rojo */
-    color: white;
+  background-color: #ef5350; /* Rojo */
+  color: white;
 }
 
 #formulario-intento {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 10px;
-    margin-top: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  margin-top: 20px;
 }
 
 #input-pokemon {
-    padding: 10px;
-    font-size: 1rem;
-    border: 2px solid #ccc;
-    border-radius: 5px;
-    width: 200px;
-    transition: border-color 0.3s ease;
+  padding: 10px;
+  font-size: 1rem;
+  border: 2px solid #ccc;
+  border-radius: 5px;
+  width: 200px;
+  transition: border-color 0.3s ease;
 }
 
 #input-pokemon:focus {
-    border-color: var(--clr-blue);
-    outline: none;
+  border-color: var(--clr-blue);
+  outline: none;
 }
 
 #enviar-intento {
-    padding: 10px 20px;
-    font-size: 1rem;
-    background-color: var(--clr-blue);
-    color: var(--clr-white);
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s ease, transform 0.2s ease;
+  padding: 10px 20px;
+  font-size: 1rem;
+  background-color: var(--clr-blue);
+  color: var(--clr-white);
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition:
+    background-color 0.3s ease,
+    transform 0.2s ease;
 }
 
 #enviar-intento:hover {
-    background-color: #0056b3;
-    transform: scale(1.05);
+  background-color: #0056b3;
+  transform: scale(1.05);
 }
 
 #mensajes {
-    margin-top: 20px;
-    text-align: center;
-    font-size: 1.2rem;
-    color: var(--clr-black);
-    background-color: var(--clr-gray);
-    padding: 10px;
-    border-radius: 5px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  margin-top: 20px;
+  text-align: center;
+  font-size: 1.2rem;
+  color: var(--clr-black);
+  background-color: var(--clr-gray);
+  padding: 10px;
+  border-radius: 5px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
 .btn-volver {
-    position: absolute;
-    top: 10px;
-    left: 10px; /*Izquierda de todo*/
-    background-color: var(--clr-blue);
-    color: var(--clr-white); 
-    border: none;
-    border-radius: 5px;
-    padding: 10px 15px;
-    font-size: 1rem; 
-    cursor: pointer; 
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-    transition: background-color 0.3s ease, transform 0.2s ease;
+  position: absolute;
+  top: 10px;
+  left: 10px; /*Izquierda de todo*/
+  background-color: var(--clr-blue);
+  color: var(--clr-white);
+  border: none;
+  border-radius: 5px;
+  padding: 10px 15px;
+  font-size: 1rem;
+  cursor: pointer;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  transition:
+    background-color 0.3s ease,
+    transform 0.2s ease;
 }
 
 .btn-volver:hover {
-    background-color: #0056b3; /* Color más oscuro al pasar el mouse */
-    transform: scale(1.05); /* Efecto de zoom */
+  background-color: #0056b3; /* Color más oscuro al pasar el mouse */
+  transform: scale(1.05); /* Efecto de zoom */
 }
-
-
-
 
 /* Estilo general del cuerpo */
 .preguntas-body {
-    background-color: var(--clr-gray);
-    color: var(--clr-black);
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    min-height: 100vh;
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
 }
 
 /* Botón de volver */
 .btn-volver {
-    position: absolute;
-    top: 10px;
-    left: 10px;
-    background-color: var(--clr-blue);
-    color: var(--clr-white);
-    border: none;
-    border-radius: 5px;
-    padding: 10px 15px;
-    font-size: 1rem;
-    cursor: pointer;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-    transition: background-color 0.3s ease, transform 0.2s ease;
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  background-color: var(--clr-blue);
+  color: var(--clr-white);
+  border: none;
+  border-radius: 5px;
+  padding: 10px 15px;
+  font-size: 1rem;
+  cursor: pointer;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  transition:
+    background-color 0.3s ease,
+    transform 0.2s ease;
 }
 
 .btn-volver:hover {
-    background-color: #0056b3;
-    transform: scale(1.05);
+  background-color: #0056b3;
+  transform: scale(1.05);
 }
 
 /* Título */
 h1 {
-    font-size: 2.5rem;
-    color: var(--clr-blue);
-    text-align: center;
-    margin-bottom: 20px;
-
+  font-size: 2.5rem;
+  color: var(--clr-blue);
+  text-align: center;
+  margin-bottom: 20px;
 }
 
-.preguntas-main{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
+.preguntas-main {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
 }
 
 .pregunta-container {
-    background-color: var(--clr-white);
-    border-radius: 10px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    padding: 20px;
-    text-align: center;
-    max-width: 600px;
-    width: 90%;
-    margin-bottom: 20px;
+  background-color: var(--clr-white);
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  text-align: center;
+  max-width: 600px;
+  width: 90%;
+  margin-bottom: 20px;
 }
 
 /* Botón de generar pregunta */
 .btn-generar {
-    background-color: var(--clr-blue);
-    color: var(--clr-white);
-    border: none;
-    border-radius: 5px;
-    padding: 10px 20px;
-    font-size: 1.2rem;
-    cursor: pointer;
-    transition: background-color 0.3s ease, transform 0.2s ease;
+  background-color: var(--clr-blue);
+  color: var(--clr-white);
+  border: none;
+  border-radius: 5px;
+  padding: 10px 20px;
+  font-size: 1.2rem;
+  cursor: pointer;
+  transition:
+    background-color 0.3s ease,
+    transform 0.2s ease;
 }
 
 .btn-generar:hover {
-    background-color: #0056b3;
-    transform: scale(1.05);
+  background-color: #0056b3;
+  transform: scale(1.05);
 }
 
 /* Estilo para las preguntas */
 .pregunta-container p {
-    font-size: 1.2rem;
-    margin-bottom: 15px;
+  font-size: 1.2rem;
+  margin-bottom: 15px;
 }
 
 .pregunta-container img {
-    max-width: 100%;
-    height: auto;
-    border-radius: 10px;
-    margin: 10px 0;
+  max-width: 100%;
+  height: auto;
+  border-radius: 10px;
+  margin: 10px 0;
 }
 
 .pregunta-container input {
-    width: 80%;
-    padding: 10px;
-    margin: 10px 0;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    font-size: 1rem;
+  width: 80%;
+  padding: 10px;
+  margin: 10px 0;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 1rem;
 }
 
 .pregunta-container button {
-    background-color: var(--clr-blue);
-    color: var(--clr-white);
-    border: none;
-    border-radius: 5px;
-    padding: 10px 20px;
-    font-size: 1rem;
-    cursor: pointer;
-    transition: background-color 0.3s ease, transform 0.2s ease;
+  background-color: var(--clr-blue);
+  color: var(--clr-white);
+  border: none;
+  border-radius: 5px;
+  padding: 10px 20px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition:
+    background-color 0.3s ease,
+    transform 0.2s ease;
 }
 
 .pregunta-container button:hover {
-    background-color: #0056b3;
-    transform: scale(1.05);
+  background-color: #0056b3;
+  transform: scale(1.05);
 }
 
 /* Mensajes de resultado */
 #resultado {
-    margin-top: 10px;
-    font-size: 1.2rem;
-    font-weight: bold;
+  margin-top: 10px;
+  font-size: 1.2rem;
+  font-weight: bold;
 }

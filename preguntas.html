@@ -3,8 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Preguntas Pokémon</title>
+    <title>Preguntas - PokéApp</title>
     <link rel="stylesheet" href="css/main.css">
+    <!-- GSAP for animations -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
 </head>
 <body class="preguntas-body">
     <header>
@@ -13,13 +15,47 @@
         </button>
     </header>
     <main class="preguntas-main">
-    <h1>Preguntas Pokémon</h1>
-        <div id="preguntaContainer" class="pregunta-container">
+    <h1 style="color: var(--clr-yellow); text-shadow: 2px 2px 4px rgba(0,0,0,0.5), -2px -2px 0 #cc0000, 2px -2px 0 #cc0000, -2px 2px 0 #cc0000, 2px 2px 0 #cc0000;">Preguntas Pokémon</h1>
+        <div id="preguntaContainer" class="pregunta-container" style="background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.2); color: var(--clr-white);">
             <p>Haz clic en "Generar Pregunta" para comenzar.</p>
         </div>
         <button id="generar" class="btn-generar">Generar Pregunta</button>
     </main>
 
     <script src="js/main.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const tl = gsap.timeline();
+            
+            // Back button
+            tl.from(".btn-volver", {
+                x: -50,
+                opacity: 0,
+                duration: 0.5,
+                ease: "power2.out"
+            })
+            // Title
+            .from("h1", {
+                scale: 0.5,
+                opacity: 0,
+                duration: 0.7,
+                ease: "back.out(1.5)"
+            }, "-=0.2")
+            // Question Container
+            .from(".pregunta-container", {
+                y: 50,
+                opacity: 0,
+                duration: 0.4,
+                ease: "power2.out"
+            }, "-=0.3")
+            // Generate Button
+            .from(".btn-generar", {
+                y: 20,
+                opacity: 0,
+                duration: 0.4,
+                ease: "back.out(1.5)"
+            }, "-=0.2");
+        });
+    </script>
 </body>
 </html>
